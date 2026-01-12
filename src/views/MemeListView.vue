@@ -1,4 +1,4 @@
-<!-- <script setup lang="ts">
+<script setup lang="ts">
 import { onMounted } from 'vue'
 import { useMemesStore } from '@/stores/memes.store'
 import MemeCard from '@/components/memes/MemeCard.vue'
@@ -26,14 +26,5 @@ onMounted(() => {
 
     <Pagination v-if="store.totalPages > 1" />
   </v-container>
-</template> -->
-
-<template>
-  <v-container class="text-center">
-    <v-card class="pa-6">
-      <v-card-text>
-        Działa jak powinno
-      </v-card-text>
-    </v-card>
-  </v-container>
 </template>
+
