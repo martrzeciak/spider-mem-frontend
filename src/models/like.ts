@@ -1,5 +1,5 @@
 export interface Like{
-  id: string
-  userId: string
-  createdAt: string
+    id: string
+    userId: string
+    createdAt: string
 }
