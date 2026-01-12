@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import AppLayout from '@/layouts/AppLayout.vue'
 import MemeListView from '@/views/MemeListView.vue'
 
 const router = createRouter({
@@ -6,9 +7,15 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      name: 'memes',
-      component: MemeListView,
-    },
+      component: AppLayout,
+      children: [
+        {
+          path: '',
+          name: 'memes',
+          component: MemeListView,
+        }
+      ]
+    }
   ],
 })
 

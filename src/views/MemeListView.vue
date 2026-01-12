@@ -12,19 +12,12 @@ onMounted(() => {
 </script>
 
 <template>
-  <v-container>
-    <v-row>
-      <v-col
-        v-for="meme in store.memes"
-        :key="meme.id"
-        cols="12"
-        md="4"
-      >
-        <MemeCard :meme="meme" />
-      </v-col>
-    </v-row>
+  <div>
+    <div v-for="meme in store.memes" key="meme.id">
+      <MemeCard :meme="meme" />
+    </div>
 
     <Pagination v-if="store.totalPages > 1" />
-  </v-container>
+  </div>
 </template>
 
