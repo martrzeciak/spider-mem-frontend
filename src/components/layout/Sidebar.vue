@@ -1,27 +1,37 @@
-<template>
-  <div class="sidebar">
-    <section class="block">
-      <h3>Użytkownik</h3>
-      <button>Zaloguj</button>
-    </section>
+<script setup lang="ts">
+import { ref } from 'vue'
+import { useAuthStore } from '@/stores/auth.store'
+import LoginForm from '@/components/auth/LoginForm.vue'
+import RegisterForm from '@/components/auth/RegisterForm.vue'
 
-    <section class="block">
-      <h3>Info</h3>
-      <p>SpiderMem frontend</p>
-    </section>
-  </div>
+const auth = useAuthStore()
+</script>
+
+<template>
+    <div class="sidebar">
+
+        <section class="block">
+            <h3>Info</h3>
+            <p>SpiderMem frontend</p>
+        </section>
+
+        <LoginForm v-if="auth.showLoginForm" />
+        <RegisterForm v-if="auth.showRegisterForm" />
+
+    </div>
 </template>
 
 <style scoped>
 .sidebar {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
 }
 
 .block {
-  border: 1px solid #ddd;
-  padding: 12px;
-  border-radius: 6px;
+    border: 1px solid #ddd;
+    margin: 12px;
+    padding: 12px;
+    border-radius: 6px;
 }
 </style>
