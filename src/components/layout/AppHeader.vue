@@ -1,13 +1,14 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router'
 import { useAuthStore } from '@/stores/auth.store'
+import logo from '@/assets/logo.png'
 const auth = useAuthStore()
 </script>
 
 <template>
     <header class="header">
         <RouterLink to="/" class="logo">
-            Spider-mem
+            <img :src="logo" alt="Spider-mem logo"/>
         </RouterLink>
 
         <div v-if="!auth.isAuthenticated" class="actions">
@@ -28,7 +29,7 @@ const auth = useAuthStore()
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 12px 16px;
+    padding: 4px 20px;
     background: #1e1e1e;
 }
 
@@ -37,6 +38,7 @@ const auth = useAuthStore()
     font-size: 1.4rem;
     text-decoration: none;
     font-weight: bold;
+    display: flex;
 }
 
 .actions {
@@ -55,5 +57,9 @@ const auth = useAuthStore()
 
 .primary {
     background: #000;
+}
+
+img {
+    height: 60px;
 }
 </style>
