@@ -8,7 +8,10 @@ defineProps<{
 </script>
 
 <template>
-  <div class="meme-card">
+  <RouterLink
+    :to="{ name: 'mem-details', params: { id: meme.id } }"
+    class="meme-card"
+  >
     <img :src="meme.imageUrl" class="meme-image" />
 
     <h3>{{ meme.title }}</h3>
@@ -18,7 +21,7 @@ defineProps<{
     </p>
 
     <p class="likes">👍 {{ meme.likeCount }}</p>
-  </div>
+  </RouterLink>
 </template>
 
 <style scoped>
