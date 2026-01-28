@@ -1,6 +1,12 @@
+<script setup lang="ts">
+import AppHeader from '@/components/layout/AppHeader.vue';
+import Sidebar from '@/components/layout/Sidebar.vue'
+</script>
+
 <template>
   <div class="app-wrapper">
     <div class="app-container">
+      <AppHeader />
       <main class="content">
         <!--  main content -->
         <section class="left">
@@ -15,10 +21,6 @@
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-import Sidebar from '@/components/layout/Sidebar.vue'
-</script>
 
 <style scoped>
 .app-wrapper {
