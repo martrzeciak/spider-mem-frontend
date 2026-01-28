@@ -15,8 +15,8 @@ const auth = useAuthStore()
             <p>SpiderMem frontend</p>
         </section>
 
-        <LoginForm v-if="auth.showLoginForm" />
-        <RegisterForm v-if="auth.showRegisterForm" />
+        <LoginForm v-if="auth.showLoginForm && !auth.isAuthenticated" />
+        <RegisterForm v-if="auth.showRegisterForm && !auth.isAuthenticated" />
 
     </div>
 </template>

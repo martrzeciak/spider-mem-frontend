@@ -16,7 +16,7 @@ const auth = useAuthStore()
         </div>
 
         <div v-else>
-            <span>{{ auth.user?.username }}</span>
+            <span>{{ auth.user?.userName }}</span>
             <button @click="auth.logout" class="btn primary">Logout</button>
         </div>
 
