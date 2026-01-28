@@ -3,6 +3,7 @@ import { ref } from 'vue'
 import { useAuthStore } from '@/stores/auth.store'
 import LoginForm from '@/components/auth/LoginForm.vue'
 import RegisterForm from '@/components/auth/RegisterForm.vue'
+import AddMemeForm from '@/components/memes/AddMemeForm.vue'
 
 const auth = useAuthStore()
 </script>
@@ -17,7 +18,7 @@ const auth = useAuthStore()
 
         <LoginForm v-if="auth.showLoginForm && !auth.isAuthenticated" />
         <RegisterForm v-if="auth.showRegisterForm && !auth.isAuthenticated" />
-
+        <AddMemeForm v-if="auth.isAuthenticated" />
     </div>
 </template>
 
