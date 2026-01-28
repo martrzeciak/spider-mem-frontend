@@ -1,33 +1,34 @@
 import { defineStore } from 'pinia'
+import axios from 'axios'
 import type { Meme } from '@/models/meme'
-import { getMemesMock } from '@/mocks/memes.mock'
+
+const API_MEMES = 'https://localhost:5001/api/Meme'
 
 export const useMemesStore = defineStore('memes', {
   state: () => ({
     memes: [] as Meme[],
-    currentPage: 1,
-    pageSize: 12,
-    totalPages: 0,
-    totalCount: 0,
-    loading: false
+    page: 1,
+    loading: false,
+    error: null as string | null,
   }),
 
   actions: {
     async fetchMemes(page = 1) {
       this.loading = true
+      this.error = null
 
-      const data = await getMemesMock(page, this.pageSize)
+      try {
+        const res = await axios.get<Meme[]>(API_MEMES, {
+          params: { page }
+        })
 
-      this.memes = data.items
-      this.currentPage = data.currentPage
-      this.totalPages = data.totalPages
-      this.totalCount = data.totalCount
-
-      this.loading = false
-    },
-
-    setPage(page: number) {
-      this.fetchMemes(page)
+        this.memes = res.data
+        this.page = page
+      } catch (e) {
+        this.error = 'Nie udało się pobrać memów'
+      } finally {
+        this.loading = false
+      }
     }
   }
 })

@@ -2,22 +2,21 @@
 import { onMounted } from 'vue'
 import { useMemesStore } from '@/stores/memes.store'
 import MemeCard from '@/components/memes/MemeCard.vue'
-import Pagination from '@/components/shared/Pagination.vue'
 
 const store = useMemesStore()
 
 onMounted(() => {
-  store.fetchMemes()
+  store.fetchMemes(1)
 })
 </script>
 
 <template>
   <div>
-    <div v-for="meme in store.memes" key="meme.id">
+    <p v-if="store.loading">Ładowanie memów...</p>
+    <p v-if="store.error">{{ store.error }}</p>
+
+    <div v-for="meme in store.memes" :key="meme.id">
       <MemeCard :meme="meme" />
     </div>
-
-    <Pagination v-if="store.totalPages > 1" />
   </div>
 </template>
-
