@@ -6,7 +6,7 @@ const auth = useAuthStore()
 </script>
 
 <template>
-    <header class="header">
+    <header v-if="auth.authChecked" class="header">
         <RouterLink to="/" class="logo">
             <img :src="logo" alt="Spider-mem logo"/>
         </RouterLink>
@@ -20,7 +20,6 @@ const auth = useAuthStore()
             <span>{{ auth.user?.userName }}</span>
             <button @click="auth.logout" class="btn primary">Logout</button>
         </div>
-
     </header>
 </template>
 
