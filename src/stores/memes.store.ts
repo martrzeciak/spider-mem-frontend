@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
 import type { Meme } from '@/models/meme'
+import type { Tag } from '@/models/tag'
 import { useAuthStore } from '@/stores/auth.store'
 import type { PagedList } from '@/models/pagination'
 
@@ -11,6 +12,7 @@ const API_MEMES_TAG = 'https://localhost:5001/api/Meme/tag'
 export const useMemesStore = defineStore('memes', {
   state: () => ({
     memes: [] as Meme[],
+    tags: [] as Tag[],
     selectedMeme: null as Meme | null,
     currentPage: 1,
     totalPages: 1,
@@ -82,6 +84,25 @@ export const useMemesStore = defineStore('memes', {
         }
       } catch {
         this.error = 'Nie udało się dodać lajka'
+      }
+    },
+
+    // =========================
+    // LISTA TAGÓW
+    // =========================
+    async fetchTags(){
+    this.loading = true
+    this.error = null
+
+      try {
+        const res = await axios.get<Tag[]>('https://localhost:5001/api/tag')
+
+        this.tags = res.data
+      } catch (e: any) {
+        this.error = 'Nie udało się pobrać tagów'
+        console.error(e)
+      } finally {
+        this.loading = false
       }
     },
 
