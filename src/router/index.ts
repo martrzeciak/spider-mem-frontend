@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import AppLayout from '@/layouts/AppLayout.vue'
 import MemeListView from '@/views/MemeListView.vue'
 import MemeDetailsView from '@/views/MemeDetailsView.vue'
+import MemeListTagView from '@/views/MemeListTagView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -19,6 +20,12 @@ const router = createRouter({
           path: 'memes/:id',
           name: 'mem-details',
           component: MemeDetailsView,
+          props: true,
+        },
+        {
+          path: 'tag/:tagId',
+          name: 'tag',
+          component: MemeListTagView,
           props: true,
         },
       ],

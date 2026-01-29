@@ -6,6 +6,7 @@ import type { PagedList } from '@/models/pagination'
 
 const API_MEMES = 'https://localhost:5001/api/Meme'
 const API_COMMENTS = 'https://localhost:5001/api/Comment'
+const API_MEMES_TAG = 'https://localhost:5001/api/Meme/tag'
 
 export const useMemesStore = defineStore('memes', {
   state: () => ({
@@ -34,10 +35,8 @@ export const useMemesStore = defineStore('memes', {
         },
       })
 
-      // ✅ MEMY Z BODY
       this.memes = res.data
 
-      // ✅ PAGINACJA Z HEADERA
       const pagination = JSON.parse(res.headers['pagination'])
 
       this.currentPage = pagination.currentPage
@@ -83,6 +82,34 @@ export const useMemesStore = defineStore('memes', {
         }
       } catch {
         this.error = 'Nie udało się dodać lajka'
+      }
+    },
+
+    async fetchMemesByTag(tagId: string, page = 1) {
+      this.loading = true
+      this.error = null
+
+      try {
+        const res = await axios.get<Meme[]>(
+          `${API_MEMES_TAG}/${tagId}`,
+          {
+            params: {
+              pageNumber: page,
+              pageSize: this.pageSize,
+            }
+          }
+        )
+
+        this.memes = res.data
+
+        const pagination = JSON.parse(res.headers['pagination'])
+        this.currentPage = pagination.currentPage
+        this.totalPages = pagination.totalPages
+
+      } catch {
+        this.error = 'Nie udało się pobrać memów dla wybranego tagu'
+      } finally {
+        this.loading = false
       }
     },
 
@@ -165,6 +192,8 @@ export const useMemesStore = defineStore('memes', {
         this.fetchMemes(this.currentPage - 1)
       }
     },
+
+    
 
     // =========================
     // CLEANUP

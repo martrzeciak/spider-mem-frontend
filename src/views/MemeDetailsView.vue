@@ -40,13 +40,14 @@ onUnmounted(() => {
 
       <!-- HASHTAGI -->
       <div class="tags">
-        <span
+        <RouterLink
           v-for="tag in store.selectedMeme.tags"
-          :key="tag.name"
+          :key="tag.id"
+          :to="{ name: 'tag', params: { tagId: tag.id } }"
           class="tag"
         >
           #{{ tag.name }}
-        </span>
+        </RouterLink>
       </div>
 
       <!-- TYTUŁ -->
