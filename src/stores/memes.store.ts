@@ -63,7 +63,7 @@ export const useMemesStore = defineStore('memes', {
       try {
         await axios.post(`${API_MEMES}/${id}/like`)
 
-        // optymistyczny update (jak jbzd)
+        // optymistyczny update 
         if (this.selectedMeme && this.selectedMeme.id === id) {
           this.selectedMeme.likeCount++
         }
