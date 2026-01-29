@@ -2,6 +2,7 @@
 import { onMounted } from 'vue'
 import { useMemesStore } from '@/stores/memes.store'
 import MemeCard from '@/components/memes/MemeCard.vue'
+import Pagination from '@/components/common/Pagination.vue'
 
 const store = useMemesStore()
 
@@ -23,4 +24,11 @@ onMounted(() => {
       <MemeCard :meme="meme" />
     </div>
   </div>
+  <Pagination
+    v-if="store.totalPages > 1"
+    :currentPage="store.currentPage"
+    :totalPages="store.totalPages"
+    @prev="store.prevPage"
+    @next="store.nextPage"
+  />
 </template>

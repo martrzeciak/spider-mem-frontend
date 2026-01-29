@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import axios from 'axios'
 import type { Meme } from '@/models/meme'
 import { useAuthStore } from '@/stores/auth.store'
+import type { PagedList } from '@/models/pagination'
 
 const API_MEMES = 'https://localhost:5001/api/Meme'
 const API_COMMENTS = 'https://localhost:5001/api/Comment'
@@ -10,7 +11,9 @@ export const useMemesStore = defineStore('memes', {
   state: () => ({
     memes: [] as Meme[],
     selectedMeme: null as Meme | null,
-    page: 1,
+    currentPage: 1,
+    totalPages: 1,
+    pageSize: 10,
     loading: false,
     error: null as string | null,
   }),
@@ -20,21 +23,31 @@ export const useMemesStore = defineStore('memes', {
     // LISTA MEMÓW
     // =========================
     async fetchMemes(page = 1) {
-      this.loading = true
-      this.error = null
+    this.loading = true
+    this.error = null
 
-      try {
-        const res = await axios.get<Meme[]>(API_MEMES, {
-          params: { page }
-        })
-        this.memes = res.data
-        this.page = page
-      } catch {
-        this.error = 'Nie udało się pobrać memów'
-      } finally {
-        this.loading = false
-      }
-    },
+    try {
+      const res = await axios.get<Meme[]>(API_MEMES, {
+        params: {
+          pageNumber: page,
+          pageSize: this.pageSize,
+        },
+      })
+
+      // ✅ MEMY Z BODY
+      this.memes = res.data
+
+      // ✅ PAGINACJA Z HEADERA
+      const pagination = JSON.parse(res.headers['pagination'])
+
+      this.currentPage = pagination.currentPage
+      this.totalPages = pagination.totalPages
+    } catch (e) {
+      this.error = 'Nie udało się pobrać memów'
+    } finally {
+      this.loading = false
+    }
+  },
 
     // =========================
     // JEDEN MEM (DETAIL)
@@ -138,6 +151,18 @@ export const useMemesStore = defineStore('memes', {
         }
       } catch {
         this.error = 'Nie udało się dodać komentarza'
+      }
+    },
+
+    nextPage() {
+      if (this.currentPage < this.totalPages) {
+        this.fetchMemes(this.currentPage + 1)
+      }
+    },
+
+    prevPage() {
+      if (this.currentPage > 1) {
+        this.fetchMemes(this.currentPage - 1)
       }
     },
 
