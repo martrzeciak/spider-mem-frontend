@@ -10,12 +10,6 @@ const auth = useAuthStore()
 
 <template>
     <div class="sidebar">
-
-        <section class="block">
-            <h3>Info</h3>
-            <p>SpiderMem frontend</p>
-        </section>
-
         <LoginForm v-if="auth.showLoginForm && !auth.isAuthenticated" />
         <RegisterForm v-if="auth.showRegisterForm && !auth.isAuthenticated" />
         <AddMemeForm v-if="auth.isAuthenticated" />
