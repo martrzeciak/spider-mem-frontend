@@ -73,6 +73,41 @@ export const useMemesStore = defineStore('memes', {
       }
     },
 
+    async toggleLike(memeId: string) {
+      const authStore = useAuthStore()
+
+      if (!authStore.token) {
+        this.error = 'Musisz być zalogowany, aby polubić mema'
+        return
+      }
+
+      try {
+        const res = await axios.post<number>(
+          `${API_MEMES}/${memeId}/toggle`,
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${authStore.token}`
+            }
+          }
+        )
+
+        // update mema w detailu
+        if (this.selectedMeme?.id === memeId) {
+          this.selectedMeme.likeCount = res.data
+        }
+
+        // update mema na liście
+        const meme = this.memes.find(m => m.id === memeId)
+        if (meme) {
+          meme.likeCount = res.data
+        }
+
+      } catch {
+        this.error = 'Nie udało się zmienić polubienia'
+      }
+    },
+
     // =========================
     // DODANIE KOMENTARZA (Z TOKENEM)
     // =========================

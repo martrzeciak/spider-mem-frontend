@@ -68,7 +68,7 @@ onUnmounted(() => {
 
         <button
           class="like-button"
-          @click="store.likeMeme(store.selectedMeme.id)"
+          @click="store.toggleLike(store.selectedMeme.id)"
         >
           👍 {{ store.selectedMeme.likeCount }}
         </button>
