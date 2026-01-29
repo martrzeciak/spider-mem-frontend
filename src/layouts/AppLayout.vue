@@ -8,12 +8,12 @@ import Sidebar from '@/components/layout/Sidebar.vue'
     <div class="app-container">
       <AppHeader />
       <main class="content">
-        <!--  main content -->
         <section class="left">
-          <router-view />
+          <div class="feed">
+            <router-view />
+          </div>
         </section>
 
-        <!--  sidebar -->
         <aside class="right">
           <Sidebar />
         </aside>
@@ -36,8 +36,17 @@ import Sidebar from '@/components/layout/Sidebar.vue'
 
 .content {
   display: grid;
-  grid-template-columns: 3fr 1fr;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 1fr);
   gap: 24px;
+}
+
+.left {
+  min-width: 0;
+}
+
+.feed {
+  max-width: 720px;
+  width: 100%;
 }
 
 @media (max-width: 900px) {

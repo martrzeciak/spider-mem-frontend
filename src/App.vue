@@ -1,7 +1,13 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
+import { useAuthStore } from '@/stores/auth.store'
+
+const auth = useAuthStore()
 </script>
 
 <template>
-  <router-view />
+  <div v-if="!auth.authChecked">
+    Sprawdzanie sesji...
+  </div>
+
+  <router-view v-else />
 </template>
